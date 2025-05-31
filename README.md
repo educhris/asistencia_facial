@@ -22,4 +22,4 @@ python interfaz_gui-3.py
 
 ## Autor
 
-EduChris
+Christian E. Iza
