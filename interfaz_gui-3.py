@@ -9,12 +9,17 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
+
+# Ajuste para ejecutable (.exe) con PyInstaller
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS)
+
 # Directorios
-base_path = 'base_datos'  # Aquí coloca las imágenes de tus estudiantes (ej: base_datos/Juan.jpg)
+base_path = 'base_datos'  
 registro_path = 'asistencia.csv'
 fotos_path = 'fotos_registro'
 personas_registradas = set()
-y_true = []  # Se cargará desde y_true.csv automáticamente
+y_true = []  # Se cargara desde y_true.csv automaticamente
 y_pred = []
 
 # Crear directorios si no existen
@@ -25,8 +30,12 @@ os.makedirs(fotos_path, exist_ok=True)
 if not os.path.exists(registro_path):
     pd.DataFrame(columns=["Nombre", "Fecha", "Hora"]).to_csv(registro_path, index=False)
 
-# Función de evaluación
+# Evaluar modelo
 def evaluar_modelo():
+    print("Contenido de y_true:", y_true)
+    print("Contenido de y_pred:", y_pred)
+    print("Longitudes:", len(y_true), len(y_pred))
+
     if len(y_true) == len(y_pred) and y_true:
         acc = accuracy_score(y_true, y_pred)
         prec = precision_score(y_true, y_pred, average='weighted', zero_division=0)
@@ -34,13 +43,25 @@ def evaluar_modelo():
         f1 = f1_score(y_true, y_pred, average='weighted', zero_division=0)
         mensaje = f"Accuracy: {acc:.2f}\nPrecision: {prec:.2f}\nRecall: {rec:.2f}\nF1 Score: {f1:.2f}"
     else:
-        mensaje = "No hay suficientes datos o las listas y_true e y_pred no coinciden."
-    messagebox.showinfo("Evaluación del Modelo", mensaje)
+        mensaje = (
+            "Las listas no coinciden o estan vacias.\n\n"
+            f"y_true ({len(y_true)}): {y_true}\n"
+            f"y_pred ({len(y_pred)}): {y_pred}"
+        )
+    messagebox.showinfo("Evaluacion del Modelo", mensaje)
 
 # Procesamiento de video
 def procesar_video(label, lista, canvas, video_panel):
     cap = cv2.VideoCapture(0)
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    #face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    
+
+    # Verificar si el clasificador Haar se cargó
+    if face_cascade.empty():
+        label.config(text="Error: No se cargó haarcascade_frontalface_default.xml.")
+        return
+
 
     def loop():
         if not cap.isOpened():
