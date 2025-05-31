@@ -17,7 +17,7 @@ pip install -r requirements.txt
 ## Uso
 
 ```bash
-python interfaz_gui.py
+python interfaz_gui-3.py
 ```
 
 ## Autor
