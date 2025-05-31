@@ -1,6 +1,6 @@
 # Asistencia Facial
 
-Sistema de reconocimiento facial para gestionar la asistencia de personas utilizando Python y OpenCV.
+Sistema de reconocimiento facial para gestionar la asistencia de alumnos utilizando Python y OpenCV.
 
 ## Características
 
