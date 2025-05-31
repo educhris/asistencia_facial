@@ -1,8 +1,25 @@
-# Sistema de Asistencia con Reconocimiento Facial
+# Asistencia Facial
 
-## Estructura del Proyecto
-- `main.py`: Script principal para reconocimiento facial y registro.
-- `interfaz_gui.py`: Versión con interfaz gráfica.
-- `base_datos/`: Carpeta con imágenes de referencia para cada estudiante.
-- `asistencia.csv`: Archivo de registro generado automáticamente.
-- `requirements.txt`: Dependencias del proyecto.
+Sistema de reconocimiento facial para gestionar la asistencia de personas utilizando Python y OpenCV.
+
+## Características
+
+- Captura de rostros en tiempo real
+- Registro de asistencia
+- Almacenamiento de datos locales
+
+## Requisitos
+
+```bash
+pip install -r requirements.txt
+```
+
+## Uso
+
+```bash
+python interfaz_gui.py
+```
+
+## Autor
+
+EduChris
